@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import javax.validation.ConstraintViolationException;
 
-import static de.omanz.pushover.spring.support.TestDataGenerator.createMessage;
+import static de.omanz.pushover.spring.support.SpringTestDataGenerator.createMessage;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ContextConfiguration(classes = ValidationAutoConfiguration.class)

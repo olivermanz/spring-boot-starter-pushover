@@ -95,7 +95,7 @@ public class PushoverClient {
         return new HttpEntity<>(image.getRawContent(), headers);
     }
 
-      private PushoverClientResponse constructResponse(final ResponseEntity<PushoverResponseJson> httpResponse) {
+    private PushoverClientResponse constructResponse(final ResponseEntity<PushoverResponseJson> httpResponse) {
         final PushoverResponseJson json = httpResponse.getBody();
         Assert.notNull(json, "Unable to process Pushover API call since body is null.");
 

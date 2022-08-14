@@ -2,13 +2,27 @@ package de.omanz.pushover.client.support;
 
 import de.omanz.pushover.client.model.PushoverClientImage;
 import de.omanz.pushover.client.model.PushoverClientRequest;
+import de.omanz.pushover.client.model.PushoverClientResponse;
 import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.springframework.http.MediaType;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
 
-public class TestDataGenerator {
+public class ClientTestDataGenerator {
 
+    public static PushoverClientResponse createResponse(int status, String... errors) {
+        return PushoverClientResponse.builder()
+                .request(UUID.randomUUID().toString())
+                .errors(List.of(errors))
+                .status(status)
+                .httpStatusCode(status == 1 ? 200 : 400)
+                .appLimitReset(Instant.now())
+                .appLimitTotal(10_000)
+                .appLimitRemaining(1_000)
+                .build();
+    }
 
     public static PushoverClientRequest createMessage() {
         return PushoverClientRequest.builder()

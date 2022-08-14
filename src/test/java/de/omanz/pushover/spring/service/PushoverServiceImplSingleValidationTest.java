@@ -2,8 +2,6 @@ package de.omanz.pushover.spring.service;
 
 import de.omanz.pushover.client.PushoverClient;
 import de.omanz.pushover.spring.PushoverClientMapper;
-import de.omanz.pushover.spring.model.GroupPushoverRequest;
-import de.omanz.pushover.spring.model.MultiUserPushoverRequest;
 import de.omanz.pushover.spring.model.PushoverMessage;
 import de.omanz.pushover.spring.model.SingleUserPushoverRequest;
 import org.assertj.core.api.AbstractThrowableAssert;
@@ -20,7 +18,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static de.omanz.pushover.spring.support.TestDataGenerator.createMessage;
+import static de.omanz.pushover.spring.support.SpringTestDataGenerator.createMessage;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ContextConfiguration(classes = ValidationAutoConfiguration.class)

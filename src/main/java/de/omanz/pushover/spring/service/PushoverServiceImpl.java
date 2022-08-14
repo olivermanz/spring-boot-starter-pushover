@@ -35,7 +35,7 @@ public class PushoverServiceImpl implements PushoverService {
         return send(mapper.map(groupRequest));
     }
 
-    public PushoverResponse send(PushoverClientRequest request) {
+    private PushoverResponse send(PushoverClientRequest request) {
         PushoverClientResponse response = client.send(request);
         return mapper.map(response);
     }

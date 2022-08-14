@@ -5,13 +5,36 @@ import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.springframework.http.MediaType;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.function.Consumer;
 
-public class TestDataGenerator {
+public class SpringTestDataGenerator {
 
+    public static SingleUserPushoverRequest createSingleUser(String user, String... devices) {
+        return SingleUserPushoverRequest.builder()
+                .userKey(user)
+                .devices(List.of(devices))
+                .message(createMessage())
+                .build();
+    }
+
+    public static MultiUserPushoverRequest createMultiUser(String... users) {
+        return MultiUserPushoverRequest.builder()
+                .userKeys(List.of(users))
+                .message(createMessage())
+                .build();
+    }
+
+    public static GroupPushoverRequest createGroup(String group) {
+        return GroupPushoverRequest.builder()
+                .groupKey(group)
+                .message(createMessage())
+                .build();
+    }
 
     public static PushoverMessage createMessage() {
-        return createMessage(builder -> {});
+        return createMessage(builder -> {
+        });
     }
 
     public static PushoverMessage createMessage(Consumer<PushoverMessage.PushoverMessageBuilder> modifier) {

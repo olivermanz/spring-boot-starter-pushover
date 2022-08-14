@@ -2,7 +2,7 @@ package de.omanz.pushover.client;
 
 import de.omanz.pushover.client.model.PushoverClientRequest;
 import de.omanz.pushover.client.model.PushoverClientResponse;
-import de.omanz.pushover.client.support.TestDataGenerator;
+import de.omanz.pushover.client.support.ClientTestDataGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -58,7 +58,7 @@ class PushoverClientTest {
             "when the server returns success " +
             "then a corresponding response is constructed.")
     void send_request_ok() {
-        final PushoverClientRequest request = TestDataGenerator.createMessage();
+        final PushoverClientRequest request = ClientTestDataGenerator.createMessage();
         final PushoverClient.PushoverResponseJson json = createReturnValue("singleUser", 1);
         provisionServerReturn(json, HttpStatus.OK);
 
@@ -74,7 +74,7 @@ class PushoverClientTest {
             "when the server returns error " +
             "then a corresponding response is constructed.")
     void send_request_fail() {
-        final PushoverClientRequest request = TestDataGenerator.createMessage();
+        final PushoverClientRequest request = ClientTestDataGenerator.createMessage();
         final PushoverClient.PushoverResponseJson json = createReturnValue("singleUser", 0);
         provisionServerReturn(json, HttpStatus.BAD_REQUEST);
 
