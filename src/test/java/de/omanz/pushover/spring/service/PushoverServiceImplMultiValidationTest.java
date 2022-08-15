@@ -1,7 +1,6 @@
 package de.omanz.pushover.spring.service;
 
 import de.omanz.pushover.client.PushoverClient;
-import de.omanz.pushover.spring.PushoverClientMapper;
 import de.omanz.pushover.spring.model.MultiUserPushoverRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

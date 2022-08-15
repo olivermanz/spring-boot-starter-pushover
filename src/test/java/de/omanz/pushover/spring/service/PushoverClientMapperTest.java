@@ -1,9 +1,10 @@
-package de.omanz.pushover.spring;
+package de.omanz.pushover.spring.service;
 
 import de.omanz.pushover.client.model.PushoverClientRequest;
 import de.omanz.pushover.client.model.PushoverClientResponse;
 import de.omanz.pushover.client.support.ClientTestDataGenerator;
 import de.omanz.pushover.spring.model.*;
+import de.omanz.pushover.spring.service.PushoverClientMapper;
 import de.omanz.pushover.spring.support.SpringTestDataGenerator;
 import org.junit.jupiter.api.Test;
 

@@ -1,11 +1,8 @@
-package de.omanz.pushover.spring.config;
+package de.omanz.pushover.spring.service;
 
 import de.omanz.pushover.client.PushoverApplicationConfig;
 import de.omanz.pushover.client.PushoverClient;
 import de.omanz.pushover.client.PushoverErrorHandler;
-import de.omanz.pushover.spring.PushoverClientMapper;
-import de.omanz.pushover.spring.service.PushoverService;
-import de.omanz.pushover.spring.service.PushoverServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 @Setter
 @ConfigurationProperties(prefix = "spring.pushover")
 @ConditionalOnClass(PushoverService.class)
-public class PushoverConfig {
+public class PushoverAutoConfiguration {
 
     private String schema;
     private String host;
@@ -53,6 +50,11 @@ public class PushoverConfig {
         return new RestTemplateBuilder()
                 .errorHandler(new PushoverErrorHandler())
                 .build();
+    }
+
+    @Bean
+    PushoverClientMapper pushoverClientMapper(){
+        return new PushoverClientMapper();
     }
 
 }

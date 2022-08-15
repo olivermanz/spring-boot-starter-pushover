@@ -1,7 +1,6 @@
 package de.omanz.pushover.spring.service;
 
 import de.omanz.pushover.client.PushoverClient;
-import de.omanz.pushover.spring.PushoverClientMapper;
 import de.omanz.pushover.spring.model.PushoverMessage;
 import de.omanz.pushover.spring.model.SingleUserPushoverRequest;
 import org.assertj.core.api.AbstractThrowableAssert;

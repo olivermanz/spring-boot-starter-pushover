@@ -1,4 +1,4 @@
-package de.omanz.pushover.spring;
+package de.omanz.pushover.spring.service;
 
 import de.omanz.pushover.client.model.PushoverClientImage;
 import de.omanz.pushover.client.model.PushoverClientRequest;
@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
-@Service
-public class PushoverClientMapper {
+class PushoverClientMapper {
 
     public PushoverClientRequest map(final SingleUserPushoverRequest request) {
         final PushoverClientRequest.PushoverClientRequestBuilder builder = mapMessageValues(request.getMessage());

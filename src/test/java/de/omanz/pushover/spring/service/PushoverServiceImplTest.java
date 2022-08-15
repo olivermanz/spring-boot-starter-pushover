@@ -2,7 +2,6 @@ package de.omanz.pushover.spring.service;
 
 import de.omanz.pushover.client.PushoverClient;
 import de.omanz.pushover.client.model.PushoverClientRequest;
-import de.omanz.pushover.spring.PushoverClientMapper;
 import de.omanz.pushover.spring.model.GroupPushoverRequest;
 import de.omanz.pushover.spring.model.MultiUserPushoverRequest;
 import de.omanz.pushover.spring.model.SingleUserPushoverRequest;
