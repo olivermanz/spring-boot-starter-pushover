@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=de.omanz.pushover.spring.PushoverClientApplication
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=de.omanz.pushover.spring.config.PushoverConfig
