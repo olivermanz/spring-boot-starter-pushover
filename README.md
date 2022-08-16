@@ -1,8 +1,5 @@
 # Spring Boot Starter for Pushover
 
-**NOTE:** I am currently working on deploying this to maven central. Until then, I would kindly ask you to build the project 
-from sources for now. 
-
 ## Pushover
 Pushover is a service for sending push messages to end devices like smartphone. For details refer to their website 
 at https://www.pushover.net. This project basically adds a service for sending message over the pushover REST API to your spring boot application. For this 

@@ -20,6 +20,13 @@
         <delombokedSourceDir>${project.build.directory}/delombok</delombokedSourceDir>
     </properties>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <groupId>de.omanz</groupId>
     <artifactId>spring-boot-starter-pushover</artifactId>
     <version>0.1.0-SNAPSHOT</version>
@@ -67,13 +74,73 @@
         </dependency>
     </dependencies>
 
-
     <profiles>
         <profile>
             <id>build</id>
             <properties>
                 <sourceDir>${delombokedSourceDir}</sourceDir>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.13</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok-maven-plugin</artifactId>
+                        <version>1.18.20.0</version>
+                        <executions>
+                            <execution>
+                                <id>delombok</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>delombok</goal>
+                                </goals>
+                                <configuration>
+                                    <addOutputDirectory>false</addOutputDirectory>
+                                    <sourceDirectory>${origSourceDir}</sourceDirectory>
+                                    <outputDirectory>${delombokedSourceDir}</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
@@ -83,39 +150,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok-maven-plugin</artifactId>
-                <version>1.18.20.0</version>
-                <executions>
-                    <execution>
-                        <id>delombok</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>delombok</goal>
-                        </goals>
-                        <configuration>
-                            <addOutputDirectory>false</addOutputDirectory>
-                            <sourceDirectory>${origSourceDir}</sourceDirectory>
-                            <outputDirectory>${delombokedSourceDir}</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
