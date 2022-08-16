@@ -18,7 +18,7 @@
 
     <groupId>de.omanz</groupId>
     <artifactId>spring-boot-starter-pushover</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
 
     <name>Spring Boot Starter Pushover</name>
     <description>For adding Pushover support to a spring boot application.</description>
