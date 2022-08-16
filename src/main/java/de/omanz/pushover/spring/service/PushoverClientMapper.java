@@ -4,11 +4,15 @@ import de.omanz.pushover.client.model.PushoverClientImage;
 import de.omanz.pushover.client.model.PushoverClientRequest;
 import de.omanz.pushover.client.model.PushoverClientResponse;
 import de.omanz.pushover.spring.model.*;
-import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Mapper to transform between client side api and spring side api.
+ * The Pushover API is a little generic - e.g. the user field is used for
+ * multiple purposes. The spring sides api tries to abstract from that.
+ */
 class PushoverClientMapper {
 
     public PushoverClientRequest map(final SingleUserPushoverRequest request) {
@@ -28,7 +32,7 @@ class PushoverClientMapper {
 
     public PushoverClientRequest map(final GroupPushoverRequest request) {
         final PushoverClientRequest.PushoverClientRequestBuilder builder = mapMessageValues(request.getMessage());
-        builder.group(request.getGroupKey());
+        builder.user(request.getGroupKey());
         return builder.build();
     }
 

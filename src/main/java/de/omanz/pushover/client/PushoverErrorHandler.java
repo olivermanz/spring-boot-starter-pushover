@@ -12,7 +12,6 @@ import java.io.IOException;
  *
  * @see https://pushover.net/api#friendly
  *
- * Return of 400 means the
  */
 public class PushoverErrorHandler implements ResponseErrorHandler {
 

@@ -6,6 +6,11 @@ import lombok.Getter;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+/**
+ * Supplementary URL
+ *  <p/>
+ * https://pushover.net/api#urls
+ */
 @Builder
 @Getter
 public class PushoverURL {

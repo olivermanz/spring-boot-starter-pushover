@@ -6,6 +6,13 @@ import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * A sound to be played when the message is received. All constants refer
+ * to standard Pushover sounds that can be used out of the box. You can define
+ * a custom sound by uploading them to your account and then use them with PushoverSound.custom(id);
+ * <p/>
+ * https://pushover.net/api#sounds
+ */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class PushoverSound {

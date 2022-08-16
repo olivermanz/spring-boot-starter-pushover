@@ -12,7 +12,6 @@ public class PushoverClientRequest {
     @NotEmpty
     private final String user;
     private final String device;
-    private final String group;
 
     private final String message;
     private final String title;
