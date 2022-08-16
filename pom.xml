@@ -28,8 +28,8 @@
     </distributionManagement>
 
     <groupId>de.omanz</groupId>
-    <artifactId>spring-boot-starter-pushover</artifactId>
-    <version>0.1.0</version>
+    <artifactId>pushover-spring-boot-starter</artifactId>
+    <version>0.1.1</version>
 
     <name>Spring Boot Starter Pushover</name>
     <description>For adding Pushover support to a spring boot application.</description>
@@ -132,10 +132,25 @@
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
-                                <phase>install</phase>
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadoc</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <!--Because of Lombok-->
+                                    <doclint>none</doclint>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
