@@ -19,7 +19,7 @@ In maven, for example, add the following dependency to your pom.xml:
 <dependency>
     <groupId>de.omanz</groupId>
     <artifactId>spring-boot-starter-pushover</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0-SNAPSHOT</version>
 </dependency> 
 ```
 
