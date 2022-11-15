@@ -21,6 +21,7 @@ public class ClientTestDataGenerator {
                 .appLimitReset(Instant.now())
                 .appLimitTotal(10_000)
                 .appLimitRemaining(1_000)
+                .request(UUID.randomUUID().toString())
                 .build();
     }
 

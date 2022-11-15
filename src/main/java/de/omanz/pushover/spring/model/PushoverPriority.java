@@ -12,7 +12,8 @@ public enum PushoverPriority {
     LOWEST,
     LOW,
     NORMAL,
-    HIGH
+    HIGH,
+    EMERGENCY
 
 
 }

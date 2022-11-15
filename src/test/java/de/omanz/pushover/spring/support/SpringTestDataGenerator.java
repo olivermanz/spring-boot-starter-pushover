@@ -10,22 +10,22 @@ import java.util.function.Consumer;
 
 public class SpringTestDataGenerator {
 
-    public static SingleUserPushoverRequest createSingleUser(String user, String... devices) {
+    public static SingleUserPushoverRequest createSingleUser(final String user, final PushoverPriority priority, final String... devices) {
         return SingleUserPushoverRequest.builder()
                 .userKey(user)
                 .devices(List.of(devices))
-                .message(createMessage())
+                .message(createMessage(builder -> builder.priority(priority)))
                 .build();
     }
 
-    public static MultiUserPushoverRequest createMultiUser(String... users) {
+    public static MultiUserPushoverRequest createMultiUser(final String... users) {
         return MultiUserPushoverRequest.builder()
                 .userKeys(List.of(users))
                 .message(createMessage())
                 .build();
     }
 
-    public static GroupPushoverRequest createGroup(String group) {
+    public static GroupPushoverRequest createGroup(final String group) {
         return GroupPushoverRequest.builder()
                 .groupKey(group)
                 .message(createMessage())
@@ -37,7 +37,7 @@ public class SpringTestDataGenerator {
         });
     }
 
-    public static PushoverMessage createMessage(Consumer<PushoverMessage.PushoverMessageBuilder> modifier) {
+    public static PushoverMessage createMessage(final Consumer<PushoverMessage.PushoverMessageBuilder> modifier) {
         final PushoverMessage.PushoverMessageBuilder builder = PushoverMessage.builder()
                 .message(RandomString.make(1024))
                 .messageTitle(RandomString.make(250))

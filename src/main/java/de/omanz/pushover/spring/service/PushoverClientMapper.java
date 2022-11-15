@@ -43,11 +43,13 @@ class PushoverClientMapper {
                 .sound(message.getSound() != null ? message.getSound().getId() : null)
                 .title(message.getMessageTitle())
                 .message(message.getMessage())
+                .priority(mapPriority(message.getPriority()))
                 .image(map(message.getAttachedImage()))
                 .time(message.getDisplayedTime() != null ? message.getDisplayedTime().getEpochSecond() : null)
                 .url(message.getUrl() != null ? message.getUrl().getUrl() : null)
                 .urlTitle(message.getUrl() != null ? message.getUrl().getTitle() : null);
     }
+
 
     private PushoverClientImage map(final PushoverImage attachedImage) {
         if (attachedImage == null) {
@@ -61,7 +63,7 @@ class PushoverClientMapper {
                 .build();
     }
 
-    public PushoverResponse map(final PushoverClientResponse response) {
+    public PushoverResponse map(final PushoverClientResponse response, final int priority) {
         List<String> errors = (response.getErrors() != null && !response.getErrors().isEmpty()) ? Collections.unmodifiableList(response.getErrors()) : Collections.emptyList();
 
         return PushoverResponse.builder()
@@ -69,7 +71,41 @@ class PushoverClientMapper {
                 .appLimitRemaining(response.getAppLimitRemaining())
                 .appLimitTotal(response.getAppLimitTotal())
                 .appLimitReset(response.getAppLimitReset())
+                .priority(mapPriority(priority))
+                .request(response.getRequest())
                 .errors(errors)
                 .build();
+    }
+
+    private int mapPriority(PushoverPriority priority) {
+        switch (priority) {
+            case LOWEST:
+                return -2;
+            case LOW:
+                return -1;
+            case NORMAL:
+                return 0;
+            case HIGH:
+                return 1;
+            case EMERGENCY:
+                return 2;
+        }
+        throw new IllegalArgumentException("Unable to map priority of value " + priority + " to an int value.");
+    }
+
+    private PushoverPriority mapPriority(int priority) {
+        switch (priority){
+            case -2:
+                return PushoverPriority.LOWEST;
+            case -1:
+                return PushoverPriority.LOW;
+            case 0:
+                return PushoverPriority.NORMAL;
+            case 1:
+                return PushoverPriority.HIGH;
+            case 2:
+                return PushoverPriority.EMERGENCY;
+        }
+        throw new IllegalArgumentException("Unable to map priority of value " + priority + " to a enum value. -2 to 2 are allowed.");
     }
 }

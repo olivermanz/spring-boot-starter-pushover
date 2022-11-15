@@ -6,6 +6,11 @@ import de.omanz.pushover.client.support.ClientTestDataGenerator;
 import de.omanz.pushover.spring.model.*;
 import de.omanz.pushover.spring.support.SpringTestDataGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,15 +18,17 @@ class PushoverClientMapperTest {
 
     final PushoverClientMapper sut = new PushoverClientMapper();
 
-    @Test
-    void map_single_user_request() {
-        SingleUserPushoverRequest springSideRequest = SpringTestDataGenerator.createSingleUser("user1", "somePhone", "someOtherPhone");
+    @ParameterizedTest
+    @MethodSource("constructPriorities")
+    void map_single_user_request(PushoverPriority priorityAsEnum, int priorityAsInt) {
+        SingleUserPushoverRequest springSideRequest = SpringTestDataGenerator.createSingleUser("user1", priorityAsEnum, "somePhone", "someOtherPhone");
 
         PushoverClientRequest clientSideRequest = sut.map(springSideRequest);
 
         assertMessage(clientSideRequest, springSideRequest.getMessage());
         assertThat(clientSideRequest.getUser()).isEqualTo("user1");
         assertThat(clientSideRequest.getDevice()).isEqualTo("somePhone,someOtherPhone");
+        assertThat(clientSideRequest.getPriority()).isEqualTo(priorityAsInt);
     }
 
     @Test
@@ -36,7 +43,7 @@ class PushoverClientMapperTest {
     }
 
     @Test
-    void map_group_reuqest() {
+    void map_group_request() {
         GroupPushoverRequest springSideRequest = SpringTestDataGenerator.createGroup("groupX");
 
         PushoverClientRequest clientSideRequest = sut.map(springSideRequest);
@@ -53,7 +60,6 @@ class PushoverClientMapperTest {
         assertThat(clientSideRequest.getTime()).isEqualTo(springSideMessage.getDisplayedTime().getEpochSecond());
         assertThat(clientSideRequest.getSound()).isEqualTo(springSideMessage.getSound().getId());
 
-        assertThat(clientSideRequest.getPriority()).isZero();
         assertThat(clientSideRequest.getHtml()).isZero();
         assertThat(clientSideRequest.getMonospace()).isZero();
 
@@ -65,15 +71,28 @@ class PushoverClientMapperTest {
         assertThat(clientSideRequest.getImage().getRawContent()).isEqualTo(springSideMessage.getAttachedImage().getRawContent());
     }
 
-    @Test
-    void map_client_to_spring() {
+    @ParameterizedTest
+    @MethodSource("constructPriorities")
+    void map_client_to_spring(PushoverPriority priorityAsEnum, int priorityAsInt) {
         PushoverClientResponse clientSideResponse = ClientTestDataGenerator.createResponse(0, "User 1 does not exist.", "User 6 does not exist.");
-        PushoverResponse springSideResponse = sut.map(clientSideResponse);
+        PushoverResponse springSideResponse = sut.map(clientSideResponse, priorityAsInt);
 
         assertThat(springSideResponse.getStatus()).isSameAs(PushoverResponseStatus.ERROR);
         assertThat(springSideResponse.getErrors()).containsExactlyInAnyOrderElementsOf(clientSideResponse.getErrors());
         assertThat(springSideResponse.getAppLimitRemaining()).isEqualTo(clientSideResponse.getAppLimitRemaining());
         assertThat(springSideResponse.getAppLimitTotal()).isEqualTo(clientSideResponse.getAppLimitTotal());
         assertThat(springSideResponse.getAppLimitReset()).isEqualTo(clientSideResponse.getAppLimitReset());
+        assertThat(springSideResponse.getRequest()).isEqualTo(clientSideResponse.getRequest());
+        assertThat(springSideResponse.getPriority()).isEqualTo(priorityAsEnum);
+    }
+
+    private static Stream<Arguments> constructPriorities() {
+        return Stream.of(
+                Arguments.of(PushoverPriority.LOWEST, -2),
+                Arguments.of(PushoverPriority.LOW, -1),
+                Arguments.of(PushoverPriority.NORMAL, 0),
+                Arguments.of(PushoverPriority.HIGH, 1),
+                Arguments.of(PushoverPriority.EMERGENCY, 2)
+        );
     }
 }
